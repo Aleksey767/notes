@@ -1,0 +1,20 @@
+[
+    {
+        "id": 1,
+			"text": "First note",
+			"date": "18.03.2022",
+            "tag":""
+    },
+    {
+        "id": 2,
+			"text": "Second note",
+			"date": "19.03.2022",
+            "tag":""
+    },
+    {
+        "id": 3,
+			"text": "Third note",
+			"date": "20.03.2022",
+            "tag":""
+    }
+]
