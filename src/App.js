@@ -6,7 +6,7 @@ import Header from './components/Header';
 import Data from './data.json'
 
 const App = () => {
-	const [selected,setSelected]= useState(false);
+    const [selected, setSelected] = useState('');
 
     const [notes, setNotes] = useState(Data);
 
@@ -72,7 +72,8 @@ const App = () => {
         <div className={`${darkMode && 'dark-mode'}`}>
             <div className='container'>
                 <Header handleToggleDarkMode={setDarkMode} darkMode={darkMode}/>
-                <Search   setNotes={setNotes} deleteTag={deleteTag} notes={notes} handleSearchNote={setSearchText} setSelected={setSelected} selected={selected}/>
+                <Search notes={notes} handleSearchNote={setSearchText}
+                        setSelected={setSelected} selected={selected}/>
                 <NotesList
                     notes={notes.filter((note) =>
                         note.text.toLowerCase().includes(searchText)

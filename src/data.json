@@ -1,20 +1,20 @@
 [
     {
         "id": 1,
-			"text": "First note",
+			"text": "First note #first #note #march",
 			"date": "18.03.2022",
-            "tag":""
+            "tag":[["#first","#note","#march"]]
     },
     {
         "id": 2,
-			"text": "Second note",
+			"text": "Second note #second #note #march",
 			"date": "19.03.2022",
-            "tag":""
+            "tag":[["#second","#note","#march"]]
     },
     {
         "id": 3,
-			"text": "Third note",
+			"text": "Third note #third #note #march",
 			"date": "20.03.2022",
-            "tag":""
+            "tag": [["#third","#note","#march"]]
     }
 ]

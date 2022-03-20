@@ -1,8 +1,10 @@
-import {MdDeleteForever, MdEditNote, MdOutlineClear} from 'react-icons/md';
+import {MdDeleteForever, MdEditNote, MdOutlineClear, MdOutlinePlusOne, MdCheckCircle} from 'react-icons/md';
 import React, {useState} from 'react';
 
-const HandleEditNote = ({text, editNote, id}) => {
+const HandleEditNote = ({text, editNote, id}) => {           //редактирование заметки
+
     let [editMode, setEditMode] = useState(false);
+
     const activateEditMode = () => {
         setEditMode(true);
     }
@@ -12,11 +14,14 @@ const HandleEditNote = ({text, editNote, id}) => {
         editNote(text, searchTag(), id);
 
     }
+
     const handleChange = (event) => {
         text = event.target.value;
     };
+
     let word = '';
-    const searchTag = () => {
+
+    const searchTag = () => {                   //поиск тегов в поле редактора
         let tag = [];
         let reg = /#[a-zA-Z0-9А-Яа-я]+\b/g;
         word = text.match(reg)
@@ -24,16 +29,6 @@ const HandleEditNote = ({text, editNote, id}) => {
             tag.push(word);
         }
         return tag
-    }
-
-    if (text.includes(word)) {
-        const sharp = '#'
-        let q = text.replace(word, (full, a1) => {
-            return `<span>${a1}</span>`
-        })
-        for (let i = text.indexOf(sharp); i < text.length; i++) {
-
-        }
     }
 
     return (
@@ -44,7 +39,6 @@ const HandleEditNote = ({text, editNote, id}) => {
             }
 
             {editMode && <div>
-
 
 				<textarea
                     className='edit-area'
@@ -67,27 +61,63 @@ const HandleEditNote = ({text, editNote, id}) => {
 
 const Note = ({id, text, date, handleDeleteNote, tag, editNote, deleteTag}) => {
 
+    let [editMode, setEditMode] = useState(false);
+    let [inputData, setInputData] = useState('');
 
+    const activateEditMode = () => {
+        setEditMode(true);
+    }
+
+    const deactivateEditMode = (text,e,id) => {
+        setEditMode(false);
+        tag.push(e)
+        text=text+''+e
+        editNote(text, tag, id)
+        debugger
+    }
     const newTag = [].concat(...tag); // удаляем лишние уровни в массиве
-    const noteTag = newTag.map(item => {
-        return (item !== '' && <div className='noteTag'>{item}
+
+    const noteTag = newTag.map(tag => {
+
+        return (<div className='noteTag'>{tag}
             <MdOutlineClear
                 className='delete-tag'
                 onClick={() => {
-                    let rExp = new RegExp(item, "g");
+                    let rExp = new RegExp(tag, "g");
 
-                    item = newTag.toString().replace(rExp, '');//удаляем тег из массива тегов
+                    let cloneNewTag = newTag.slice()
+                    cloneNewTag.splice(newTag.indexOf(tag), 1);//удаляем тег из массива всех тегов
 
-                    text = text.replace(rExp, '').replace(/[,]/g, '');//удаляем тег из массива тегов
-                    deleteTag(text, item.split(',').slice(0,-1), id)
+                    text = text.replace(rExp, '').replace(/[,]/g, '').trim();//приводим текст к красивому виду
+
+                    deleteTag(text, cloneNewTag, id) //пушим изменения в стейт
+
                 }}
             /></div>)
-    })
 
+    })
     return (
         <div className='note'>
             <HandleEditNote editNote={editNote} text={text} id={id}/>
-            <div className='tagInput'>{noteTag}</div>
+
+            {editMode ?
+                <div>
+                    <input type={text} placeholder={'enter your tag...'}
+                           className='input-tag'
+                           onChange={(event) => setInputData(event.target.value)}/>
+                    <MdCheckCircle
+                        size='1.3em'
+                        onClick={() =>{deactivateEditMode(text,inputData,id) }}/>
+                </div>
+                : <div className='tag-block'>
+                    <div className='tagInput'>{noteTag}</div>
+                    <MdOutlinePlusOne
+                        onClick={activateEditMode}
+                        size='1.3em'
+                    /></div>
+            }
+
+
             <div className='note-footer'>
                 <small>{date}</small>
                 <MdDeleteForever
