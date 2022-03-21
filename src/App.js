@@ -31,7 +31,7 @@ const App = () => {
         );
     }, [notes]);
 
-    const addNote = (text, tag) => {
+    const addNote = (text, tag) => {        //добавить записку
         const date = new Date();
         const newNote = {
             id: nanoid(),

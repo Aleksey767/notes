@@ -1,10 +1,55 @@
+$font: 'Comfortaa', cursive;
+$green: #a7e69a;
+$white: rgb(233, 233, 233);
+
 body {
   margin: 0;
-  font-family: 'Comfortaa', cursive;
+  font-family: $font;
+}
+
+.textarea {
+  position: relative;
+  height: 200px;
+}
+
+.textarea textarea {
+  resize: none;
+  z-index: 1;
+  caret-color: black;
+  color: black;
+  background-color: transparent;
+}
+
+.textarea textarea,
+.textarea pre {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-size: 15px;
+  font-family: $font;
+  line-height: 1.2em;
+  border: 0;
+  white-space: pre-wrap;
+}
+
+.textarea pre {
+  top: 0;
+  left: 0;
+  z-index: 0;
+  color: #fff;
+  white-space: -moz-pre-wrap;
+  white-space: -o-pre-wrap;
+  word-wrap: break-word;
+}
+
+.highlight {
+  background-color: #d2e1f5;
 }
 
 code {
-  font-family: 'Comfortaa', cursive;
+  font-family: $font;
 }
 
 .delete-tag {
@@ -14,12 +59,12 @@ code {
 }
 
 .noteTag {
+  display: inline-block;
   background-color: rgb(177, 175, 194);
   width: fit-content;
   padding: 3px;
   border-radius: 20px;
   margin: 3px 1px;
-  display: inline-block;
 }
 
 .header {
@@ -53,18 +98,18 @@ code {
 }
 
 .note.new {
-  background-color: #67d7cc;
+  background-color: $green;
 }
 
 textarea {
   border: none;
   resize: none;
-  background-color: #67d7cc;
-  font-family: 'Comfortaa', cursive;
+  background-color: $green;
+  font-family: $font;
 }
 
 button, input {
-  font-family: 'Comfortaa', cursive;
+  font-family: $font;
 }
 
 .edit-area {
@@ -100,7 +145,7 @@ textarea:focus {
 }
 
 .note {
-  background-color: #fef68a;
+  background-color: #ffe87b;
   border-radius: 10px;
   padding: 1rem;
   min-height: 170px;
@@ -128,29 +173,6 @@ textarea:focus {
   width: 100%;
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.15);
   padding: 5px;
-}
-
-.search {
-  display: flex;
-  align-items: center;
-  background-color: rgb(233, 233, 233);
-  border-radius: 10px;
-  padding: 5px;
-  margin-bottom: 1.5em;
-  width: 90%;
-  height: 30px;
-}
-
-.dropdown .dropdown-content .dropdown-item {
-  transition: all 0.2s;
-}
-
-.dropdown .dropdown-content .dropdown-item:hover {
-  background-color: #f4f4f4;
-}
-
-.search-block {
-  display: flex;
 }
 
 .dropdown {
@@ -183,18 +205,41 @@ textarea:focus {
   align-items: center;
   justify-content: center;
   text-align: center;
-  background-color: white;
+  background-color: $white;
   overflow: hidden;
   white-space: pre-wrap;
   text-overflow: ellipsis; // если очень длинный тег
 }
 
-.search input, .input-tag {
-  border: none;
-  background-color: rgb(233, 233, 233);
-  width: 100%;
+
+.dropdown .dropdown-content .dropdown-item {
+  transition: all 0.2s;
 }
 
+.dropdown .dropdown-content .dropdown-item:hover {
+  background-color: #f4f4f4;
+}
+
+.search {
+  display: flex;
+  align-items: center;
+  background-color: $white;
+  border-radius: 10px;
+  padding: 5px;
+  margin-bottom: 1.5em;
+  width: 90%;
+  height: 30px;
+}
+
+.search-block {
+  display: flex;
+}
+
+.search input, .input-tag {
+  border: none;
+  background-color: $white;
+  width: 100%;
+}
 
 .input-tag-block {
   display: flex;
@@ -219,6 +264,7 @@ textarea:focus {
 
   .tag-confirm {
     width: 8%;
+    cursor: pointer;
   }
 }
 

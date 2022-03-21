@@ -21,7 +21,7 @@ const NotesList = ({
 					deleteTag={deleteTag}
 				/>
 			))}
-			<AddNote handleAddNote={handleAddNote} />
+			<AddNote handleAddNote={handleAddNote}/>
 		</div>
 	);
 };

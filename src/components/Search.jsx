@@ -50,7 +50,8 @@ const Search = ({handleSearchNote, notes, selected, setSelected}) => {
             <div className='dropdown-btn'
                  onClick={(e) => setIsActive(!isActive)}>
                 <MdFilterListAlt
-                    size='2em'/></div>
+                    fill={'orange'}
+                    size='2.3em'/></div>
             {isActive && <div className='dropdown-content'>
                 {filterTag()}
             </div>}

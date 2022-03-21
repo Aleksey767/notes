@@ -20,7 +20,7 @@ const AddNote = ({handleAddNote}) => {
     };
     const searchTag = () => {              //поиск тега в введенном тексте
         let tag = [];
-        let reg = /#[a-zA-Z0-9А-Яа-я]+\b/g;
+        let reg = /#[a-zA-Z0-9А-Яа-я]+/g;
         const word = noteText.match(reg)
 
         if (word !== null) {
@@ -28,6 +28,7 @@ const AddNote = ({handleAddNote}) => {
         }
         return tag
     }
+
     const newTag = [].concat(...searchTag());   //найденные теги складываем в массив
 
     const noteTag = newTag.map(item => {  		//рисуем теги по одиночке
@@ -42,7 +43,7 @@ const AddNote = ({handleAddNote}) => {
                 value={noteText}
                 onChange={handleChange}
             />
-            <div className='tagInput'>{noteTag}</div>
+            <div>{noteTag}</div>
             <div className='note-footer'>
                 <small>
                     {characterLimit - noteText.length} Remaining

@@ -1,20 +1,20 @@
 [
     {
         "id": 1,
-			"text": "First note #first #note #march",
+			"text": "Today was a good #day",
 			"date": "18.03.2022",
-            "tag":[["#first","#note","#march"]]
+            "tag":[["#day"]]
     },
     {
         "id": 2,
-			"text": "Second note #second #note #march",
+			"text": "Infinity is #not the #limit",
 			"date": "19.03.2022",
-            "tag":[["#second","#note","#march"]]
+            "tag":[["#not","#limit"]]
     },
     {
         "id": 3,
-			"text": "Third note #third #note #march",
+			"text": "Believe it or #not, but i really love #curry",
 			"date": "20.03.2022",
-            "tag": [["#third","#note","#march"]]
+            "tag": [["#not","#curry"]]
     }
 ]

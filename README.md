@@ -4,3 +4,9 @@
 npm install
 npm start
 ```
+
+# Deploy
+
+```
+https://notes-sazonov.netlify.app
+```

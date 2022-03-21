@@ -16,13 +16,30 @@ const HandleEditNote = ({text, editNote, id}) => {           //редактир�
 
     const handleChange = (event) => {
         text = event.target.value;
+
+        const textarea = document.querySelector('textarea');
+        const pre = document.querySelector('pre');
+
+        textarea.addEventListener('input', function(e) {
+            let string = this.value;
+            let array = string.split(/(\s+)/);
+
+            for (let i = 0; i < array.length; i++) {
+                if (array[i].includes('#')) {
+                    array[i] = "<span class='highlight'>" + array[i] + "</span>";
+                }
+            }
+            string = array.join('');
+
+            pre.innerHTML = string;
+        });
     };
 
     let word = '';
 
     const searchTag = () => {                   //поиск тегов в поле редактора
         let tag = [];
-        let reg = /#[a-zA-Z0-9А-Яа-я]+\b/g;
+        let reg = /#[a-zA-Z0-9А-Яа-я]+/g;
         word = text.match(reg)
         if (word !== null) {
             tag.push(word);
@@ -38,15 +55,17 @@ const HandleEditNote = ({text, editNote, id}) => {           //редактир�
             }
 
             {editMode && <div>
+                <div className='textarea'>
+                    <textarea
+                        rows='8'
+                        cols='10'
+                        placeholder='Type to add a note...'
+                        defaultValue={text}
+                        onChange={handleChange}
+                    />
+                   <pre></pre>
+                </div>
 
-				<textarea
-                    className='edit-area'
-                    rows='8'
-                    cols='10'
-                    placeholder='Type to add a note...'
-                    defaultValue={text}
-                    onChange={handleChange}
-                />
 
                 <MdEditNote
                     className='edit-icon'
