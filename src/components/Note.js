@@ -1,63 +1,6 @@
-import {MdDeleteForever, MdEditNote, MdOutlineClear, MdOutlinePlusOne, MdCheckCircle} from 'react-icons/md';
+import {MdCheckCircle, MdDeleteForever, MdOutlineClear, MdOutlinePlusOne} from 'react-icons/md';
 import React, {useState} from 'react';
-
-const HandleEditNote = ({text, editNote, id}) => {           //редактирование заметки
-
-    let [editMode, setEditMode] = useState(false);
-
-    const activateEditMode = () => {
-        setEditMode(true);
-    }
-
-    const deactivateEditMode = () => {
-        setEditMode(false);
-        editNote(text, searchTag(), id);
-
-    }
-
-    const handleChange = (event) => {
-        text = event.target.value;
-    };
-
-    let word = '';
-
-    const searchTag = () => {                   //поиск тегов в поле редактора
-        let tag = [];
-        let reg = /#[a-zA-Z0-9А-Яа-я]+\b/g;
-        word = text.match(reg)
-        if (word !== null) {
-            tag.push(word);
-        }
-        return tag
-    }
-
-    return (
-        <div>
-            {!editMode &&
-                <div className='text-note' onClick={activateEditMode}>{text ? text : 'blank note...'}
-                </div>
-            }
-
-            {editMode && <div>
-
-				<textarea
-                    className='edit-area'
-                    rows='8'
-                    cols='10'
-                    placeholder='Type to add a note...'
-                    defaultValue={text}
-                    onChange={handleChange}
-                />
-
-                <MdEditNote
-                    className='edit-icon'
-                    size='1.3em'
-                    onClick={() => deactivateEditMode()}/>
-            </div>
-            }
-        </div>
-    )
-}
+import HandleEditNote from "./HandleEditNote";
 
 const Note = ({id, text, date, handleDeleteNote, tag, editNote, deleteTag}) => {
 
@@ -68,56 +11,73 @@ const Note = ({id, text, date, handleDeleteNote, tag, editNote, deleteTag}) => {
         setEditMode(true);
     }
 
-    const deactivateEditMode = (text,e,id) => {
-        setEditMode(false);
-        tag.push(e)
-        text=text+''+e
-        editNote(text, tag, id)
-        debugger
+    const deactivateEditMode = (tags) => { // при закрытии режима редактирования перерисовываем заметку
+        if (tags !== undefined) {
+            setEditMode(false);
+            tag.push(tags)
+            text = text + ' ' + tags.toString().replace(/[,]/g, '')
+            editNote(text, tag, id)
+            setInputData('')
+        }
     }
-    const newTag = [].concat(...tag); // удаляем лишние уровни в массиве
+    const newTag = [].concat(...tag); // удаляем лишние уровни в массиве тегов
 
-    const noteTag = newTag.map(tag => {
+    const noteTag = newTag.map(tag => {    //сохраняем в переменную теги готовые к выводу на экран
 
-        return (<div className='noteTag'>{tag}
-            <MdOutlineClear
-                className='delete-tag'
-                onClick={() => {
-                    let rExp = new RegExp(tag, "g");
+        return (
+            <div className='noteTag'>{tag}
+                <MdOutlineClear
+                    className='delete-tag'
+                    onClick={() => {
+                        let rExp = new RegExp(tag, "g");
 
-                    let cloneNewTag = newTag.slice()
-                    cloneNewTag.splice(newTag.indexOf(tag), 1);//удаляем тег из массива всех тегов
+                        let cloneNewTag = newTag.slice()
+                        cloneNewTag.splice(newTag.indexOf(tag), 1);//удаляем тег из массива всех тегов
 
-                    text = text.replace(rExp, '').replace(/[,]/g, '').trim();//приводим текст к красивому виду
+                        const uniqueArray = cloneNewTag.filter(function (elem) { //проверяем на дубликаты
+                            return elem !== tag;
+                        });
 
-                    deleteTag(text, cloneNewTag, id) //пушим изменения в стейт
+                        text = text.replace(rExp, '').replace(/[,]/g, '').trim();//приводим текст к красивому виду
 
-                }}
-            /></div>)
-
+                        deleteTag(text, uniqueArray, id) //пушим изменения в стейт
+                    }}/></div>)
     })
+    let searchTag = () => {                   //поиск тегов в введнном слове
+        let reg = /#[a-zA-Z0-9А-Яа-я]+/g;
+        let result = inputData.match(reg)
+        if (result === null) {
+            setEditMode(false)
+        } else {
+            setEditMode(false)
+            return result
+        }
+    }
     return (
         <div className='note'>
             <HandleEditNote editNote={editNote} text={text} id={id}/>
-
             {editMode ?
-                <div>
-                    <input type={text} placeholder={'enter your tag...'}
+                <div className='input-tag-block'>
+                    <input type={text} placeholder={'enter tag for example #me'}
                            className='input-tag'
                            onChange={(event) => setInputData(event.target.value)}/>
                     <MdCheckCircle
                         size='1.3em'
-                        onClick={() =>{deactivateEditMode(text,inputData,id) }}/>
+                        onClick={() => {
+                            const tags = searchTag()
+                            deactivateEditMode(tags)
+                        }}/>
                 </div>
                 : <div className='tag-block'>
-                    <div className='tagInput'>{noteTag}</div>
+                    <div className='tag-input'>{noteTag}</div>
+
                     <MdOutlinePlusOne
+                        className='tag-confirm'
                         onClick={activateEditMode}
                         size='1.3em'
-                    /></div>
+                    />
+                </div>
             }
-
-
             <div className='note-footer'>
                 <small>{date}</small>
                 <MdDeleteForever

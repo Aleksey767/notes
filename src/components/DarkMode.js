@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Header = ({ handleToggleDarkMode,darkMode }) => {
+const DarkMode = ({ handleToggleDarkMode,darkMode }) => {
 	return (
 		<div className='header'>
 			<h1>Notes</h1>
@@ -12,11 +12,10 @@ const Header = ({ handleToggleDarkMode,darkMode }) => {
 				}
 				className='save'
 			>
-
 				{darkMode?<div>Light Mode</div>:<div>Dark Mode</div>}
 			</button>
 		</div>
 	);
 };
 
-export default Header;
+export default DarkMode;

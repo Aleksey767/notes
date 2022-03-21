@@ -2,7 +2,7 @@ import {useState, useEffect} from 'react';
 import {nanoid} from 'nanoid';
 import NotesList from './components/NotesList';
 import Search from './components/Search';
-import Header from './components/Header';
+import DarkMode from './components/DarkMode';
 import Data from './data.json'
 
 const App = () => {
@@ -43,12 +43,10 @@ const App = () => {
         setNotes(newNotes);
     };
 
-
-    const deleteNote = (id) => {
+    const deleteNote = (id) => {                  //удалить записку
         const newNotes = notes.filter((note) => note.id !== id);
         setNotes(newNotes);
     };
-
 
     const editNote = (text, tag, id) => {    // редактирование заметки
 
@@ -71,7 +69,7 @@ const App = () => {
     return (
         <div className={`${darkMode && 'dark-mode'}`}>
             <div className='container'>
-                <Header handleToggleDarkMode={setDarkMode} darkMode={darkMode}/>
+                <DarkMode handleToggleDarkMode={setDarkMode} darkMode={darkMode}/>
                 <Search notes={notes} handleSearchNote={setSearchText}
                         setSelected={setSelected} selected={selected}/>
                 <NotesList

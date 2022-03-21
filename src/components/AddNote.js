@@ -7,7 +7,7 @@ const AddNote = ({handleAddNote}) => {
     const characterLimit = 200;
 
     const handleChange = (event) => {
-        if (characterLimit - event.target.value.length >= 0) {
+        if (characterLimit - event.target.value.length >= 0) {  //счетчик кол-ва введенных символов
             setNoteText(event.target.value);
         }
     };
@@ -18,7 +18,7 @@ const AddNote = ({handleAddNote}) => {
             setNoteText('');
         }
     };
-    const searchTag = () => {
+    const searchTag = () => {              //поиск тега в введенном тексте
         let tag = [];
         let reg = /#[a-zA-Z0-9А-Яа-я]+\b/g;
         const word = noteText.match(reg)
